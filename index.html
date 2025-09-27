@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bank Jali - Sistem Antrian</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Sidebar Nasabah -->
+  <aside id="sidebarNasabah" class="sidebar">
+    <button id="sidebarToggleNasabah" class="btn-toggle" aria-label="Toggle sidebar">☰</button>
+
+    <div class="sidebar-header">
+      <i class="bi bi-bank icon-hero"></i>
+      <div class="sidebar-title">Bank Jali</div>
+    </div>
+
+    <div class="sidebar-info">
+      <div class="info-line"><i class="bi bi-clock"></i> Jam Layanan: 08:00 - 15:00</div>
+      <div id="sidebarDate" class="info-line"></div>
+      <div id="sidebarTime" class="info-line"></div>
+    </div>
+
+    <nav class="nav-list">
+      <a href="#" class="nav-item" data-target="nasabahHome"><i class="bi bi-house"></i><span>Beranda</span></a>
+      <a href="#" class="nav-item" data-target="ambil"><i class="bi bi-ticket"></i><span>Ambil Antrian</span></a>
+      <a href="#" class="nav-item" data-target="struk"><i class="bi bi-receipt"></i><span>Struk Saya</span></a>
+      <a href="#" class="nav-item" data-target="status"><i class="bi bi-bar-chart"></i><span>Status Antrian</span></a>
+    </nav>
+  </aside>
+
+  <!-- Sidebar Admin (hidden until login) -->
+  <aside id="sidebarAdmin" class="sidebar d-none">
+    <button id="sidebarToggleAdmin" class="btn-toggle" aria-label="Toggle admin sidebar">☰</button>
+
+    <div class="sidebar-header">
+      <i class="bi bi-person-badge icon-hero"></i>
+      <div class="sidebar-title">Admin — Bank Jali</div>
+    </div>
+
+    <div class="sidebar-info">
+      <div class="info-line"><i class="bi bi-clock"></i> Jam Layanan: 08:00 - 15:00</div>
+      <div id="sidebarDateAdmin" class="info-line"></div>
+      <div id="sidebarTimeAdmin" class="info-line"></div>
+    </div>
+
+    <nav class="nav-list">
+      <a href="#" class="nav-item" data-target="adminHome"><i class="bi bi-speedometer2"></i><span>Beranda</span></a>
+      <a href="#" class="nav-item" data-target="adminTeller"><i class="bi bi-cash-coin"></i><span>Teller</span></a>
+      <a href="#" class="nav-item" data-target="adminCS"><i class="bi bi-people"></i><span>Customer Service</span></a>
+    </nav>
+  </aside>
+
+  <!-- Top actions (login/logout kept, no topbar) -->
+  <div class="top-actions-wrap">
+    <button id="btnLoginTop" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-box-arrow-in-right"></i><br><small>Login</small>
+    </button>
+    <button id="btnLogoutTop" class="btn btn-outline-danger btn-sm d-none">
+      <i class="bi bi-box-arrow-right"></i><br><small>Logout</small>
+    </button>
+  </div>
+
+  <!-- Main content -->
+  <main class="main-content">
+    <div class="container py-3">
+
+      <!-- Nasabah Home -->
+      <section id="nasabahHome" class="page">
+        <div class="hero text-center mb-4">
+          <i class="bi bi-bank icon-hero-hero"></i>
+          <h2>Bank Jali</h2>
+          <p class="small-ghost">Pilih layanan, ambil nomor antrian, dan pantau status Anda secara realtime.</p>
+        </div>
+
+        <h4 class="page-title">Layanan Teller (transaksi kas)</h4>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="service-card teller-card" data-service="teller" data-type="Setor Tunai">
+              <i class="bi bi-cash-stack"></i>
+              <h6>Setor Tunai</h6>
+              <p class="small-ghost">Menyetorkan uang tunai ke rekening Anda.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card teller-card" data-service="teller" data-type="Tarik Tunai">
+              <i class="bi bi-wallet2"></i>
+              <h6>Tarik Tunai</h6>
+              <p class="small-ghost">Penarikan uang tunai dari rekening.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card teller-card" data-service="teller" data-type="Transfer">
+              <i class="bi bi-arrow-left-right"></i>
+              <h6>Transfer</h6>
+              <p class="small-ghost">Transfer ke rekening lain.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card teller-card" data-service="teller" data-type="Bayar Tagihan">
+              <i class="bi bi-receipt"></i>
+              <h6>Bayar Tagihan</h6>
+              <p class="small-ghost">Pembayaran listrik, air, telepon, dll.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card teller-card" data-service="teller" data-type="Cetak Rekening">
+              <i class="bi bi-journal-text"></i>
+              <h6>Cetak Rekening</h6>
+              <p class="small-ghost">Cetak buku tabungan atau laporan mutasi.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card teller-card" data-service="teller" data-type="Lainnya Teller">
+              <i class="bi bi-three-dots"></i>
+              <h6>Lainnya</h6>
+              <p class="small-ghost">Layanan teller lainnya.</p>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="page-title">Layanan Customer Service</h4>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="service-card cs-card" data-service="cs" data-type="Buka Rekening">
+              <i class="bi bi-person-plus"></i>
+              <h6>Buka Rekening</h6>
+              <p class="small-ghost">Pembukaan rekening baru.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card cs-card" data-service="cs" data-type="Ubah Data">
+              <i class="bi bi-pencil-square"></i>
+              <h6>Ubah Data</h6>
+              <p class="small-ghost">Perubahan data nasabah.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card cs-card" data-service="cs" data-type="Ganti Kartu ATM">
+              <i class="bi bi-credit-card-2-back"></i>
+              <h6>Ganti Kartu ATM</h6>
+              <p class="small-ghost">Penggantian kartu ATM.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card cs-card" data-service="cs" data-type="Keluhan">
+              <i class="bi bi-chat-dots"></i>
+              <h6>Keluhan</h6>
+              <p class="small-ghost">Laporkan keluhan & masalah.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card cs-card" data-service="cs" data-type="Informasi Produk">
+              <i class="bi bi-info-circle"></i>
+              <h6>Informasi Produk</h6>
+              <p class="small-ghost">Konsultasi produk dan layanan.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="service-card cs-card" data-service="cs" data-type="Lainnya CS">
+              <i class="bi bi-three-dots"></i>
+              <h6>Lainnya</h6>
+              <p class="small-ghost">Layanan customer service lainnya.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ambil Antrian -->
+      <section id="ambil" class="page d-none">
+        <h4 class="page-title">Ambil Nomor Antrian</h4>
+        <div class="muted-box">
+          <form id="ambilForm" class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Nama Lengkap</label>
+              <input id="nama" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">No. HP (opsional)</label>
+              <input id="hp" class="form-control" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Layanan</label>
+              <select id="service" class="form-select">
+                <option value="teller">Teller</option>
+                <option value="cs">Customer Service</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Jenis Layanan</label>
+              <select id="jenis" class="form-select"></select>
+            </div>
+            <div class="col-12 d-flex gap-2">
+              <button class="btn btn-primary" type="submit">Ambil Nomor</button>
+              <button id="btnBackHome" class="btn btn-link" type="button">Kembali</button>
+            </div>
+          </form>
+        </div>
+        <div id="ambilNotif" class="mt-3"></div>
+      </section>
+
+      <!-- Struk -->
+      <section id="struk" class="page d-none">
+        <h4 class="page-title">Struk Antrian Saya</h4>
+        <div id="strukContent"></div>
+      </section>
+
+      <!-- Status -->
+      <section id="status" class="page d-none">
+        <h4 class="page-title">Status Antrian</h4>
+
+        <div class="estimasi-box mb-3">
+          <i class="bi bi-stopwatch"></i>
+          <div>
+            <strong>Estimasi Waktu:</strong><br>
+            Teller ~5 menit/nasabah · CS ~8 menit/nasabah
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Teller</h6>
+            <div id="statusTeller"></div>
+          </div>
+          <div class="col-md-6">
+            <h6>Customer Service</h6>
+            <div id="statusCS"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Login Admin -->
+      <section id="loginAdmin" class="page d-none">
+        <h4 class="page-title">Login Admin</h4>
+        <div class="muted-box col-md-6 p-3">
+          <form id="adminLoginForm">
+            <div class="mb-2"><label class="form-label">Username</label><input id="adminUser" class="form-control" required></div>
+            <div class="mb-2"><label class="form-label">Password</label><input type="password" id="adminPass" class="form-control" required></div>
+            <button class="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Admin Home -->
+      <section id="adminHome" class="page d-none">
+        <h4 class="page-title">Dashboard Admin</h4>
+        <p class="small-ghost">Pantau dan kelola antrian di sini.</p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="service-card teller-card" data-target="adminTeller">
+              <i class="bi bi-cash-coin"></i>
+              <h6>Teller</h6>
+              <p class="small-ghost">Lihat & kelola antrian Teller.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="service-card cs-card" data-target="adminCS">
+              <i class="bi bi-people"></i>
+              <h6>Customer Service</h6>
+              <p class="small-ghost">Lihat & kelola antrian CS.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Admin Lists -->
+      <section id="adminTeller" class="page d-none">
+        <h4 class="page-title">Antrian Teller</h4>
+        <div id="adminTellerList"></div>
+      </section>
+
+      <section id="adminCS" class="page d-none">
+        <h4 class="page-title">Antrian Customer Service</h4>
+        <div id="adminCSList"></div>
+      </section>
+
+    </div> <!-- container -->
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
